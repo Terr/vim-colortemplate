@@ -1358,6 +1358,10 @@ fun! s:token.next() dict
   elseif l:char =~? '\m\a'
     let [self.value, self.spos, self.pos] = matchstrpos(s:getl(), '\w\+', self.pos - 1)
     let self.kind = 'WORD'
+  elseif l:char =~? '@'
+    " Highlight groups used for nvim-treesitter start with an @-symbol
+    let [self.value, self.spos, self.pos] = matchstrpos(s:getl(), '@\w\+.\w*', self.pos - 1)
+    let self.kind = 'WORD'
   elseif l:char =~# '\m[0-9]'
     let [self.value, self.spos, self.pos] = matchstrpos(s:getl(), '\d\+', self.pos - 1)
     let self.kind = 'NUM'
